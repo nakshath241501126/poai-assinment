@@ -1,0 +1,46 @@
+def solve_n_queens(n):
+    def is_safe(board, row, col):
+        for i in range(row):
+            if board[i] == col or \
+                board[i] - i == col - row or \
+                board[i] + i == col + row:
+                return False
+        return True
+
+    def solve_n_queens_helper(n, row, board):
+        if row == n:
+            return board[:]
+        for col in range(n):
+            if is_safe(board, row, col):
+                board[row] = col
+                solution = solve_n_queens_helper(n, row + 1, board)
+                if solution:
+                    return solution
+                board[row] = -1
+        return None
+
+    board = [-1]*n
+    solution = solve_n_queens_helper(n, 0, board)
+    return solution
+
+def print_board(board):
+    n = len(board)
+    for row in range(n):
+        for col in range(n):
+            if board[row] == col:
+                print("Q", end=" ")
+            else:
+                print(".", end=" ")
+        print()
+
+def main():
+    n = 8
+    solution = solve_n_queens(n)
+    if solution:
+        print("Solution:")
+        print_board(solution)
+    else:
+        print("No solution found.")
+
+if __name__ == "__main__":
+    main()
