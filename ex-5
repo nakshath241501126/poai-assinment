@@ -1,0 +1,30 @@
+% Facts
+likes(mary, food).        % Mary likes food
+likes(mary, wine).        % Mary likes wine
+likes(john, wine).        % John likes wine
+likes(john, mary).        % John likes Mary
+
+% Rules
+likes(john, X) :- likes(mary, X).         % John likes anything that Mary likes
+likes(john, X) :- likes(X, wine).         % John likes anyone who likes wine
+likes(john, X) :- likes(X, X).            % John likes anyone who likes themselves
+
+% Initialization goal
+:- initialization(main).
+
+% Main program to run queries and print results
+main :-
+    % Query if Mary likes food
+    (likes(mary, food) -> 
+        write('Mary likes food'), nl ; 
+        write('Mary does not like food'), nl),
+
+    % Query if John likes wine
+    (likes(john, wine) -> 
+        write('John likes wine'), nl ; 
+        write('John does not like wine'), nl),
+
+    % Query if John likes food
+    (likes(john, food) -> 
+        write('John likes food'), nl ; 
+        write('John does not like food'), nl).
